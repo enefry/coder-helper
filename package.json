@@ -4,7 +4,7 @@
     "description": "escape unescape code , splite url query , format curl command ",
     "publisher": "renweichen",
     "version": "0.0.2",
-    "repository": "",
+    "repository": "https://github.com/enefry/coder-helper",
     "engines": {
         "vscode": "^1.55.0"
     },
