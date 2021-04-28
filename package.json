@@ -1,0 +1,61 @@
+{
+    "name": "coder-helper",
+    "displayName": "Coder Helper",
+    "description": "escape unescape code , splite url query , format curl command ",
+    "publisher": "renweichen",
+    "version": "0.0.2",
+    "repository": "",
+    "engines": {
+        "vscode": "^1.55.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:coder-helper.curlCommandSplite",
+        "onCommand:coder-helper.codeEscape",
+        "onCommand:coder-helper.codeUnescape",
+        "onCommand:coder-helper.urlQuerySplite",
+        "onCommand:coder-helper.urlQueryMerge"
+    ],
+    "main": "./out/extension.js",
+    "contributes": {
+        "commands": [{
+            "command": "coder-helper.curlCommandSplite",
+            "title": "CURL Command Formatter"
+        }, {
+            "command": "coder-helper.codeEscape",
+            "title": "Code:Escape"
+        }, {
+            "command": "coder-helper.codeUnescape",
+            "title": "Code:Unescape"
+        }, {
+            "command": "coder-helper.urlQuerySplite",
+            "title": "URL Query:Splite "
+        }, {
+            "command": "coder-helper.urlQueryMerge",
+            "title": "URL Query:Merge"
+        }]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "pretest": "npm run compile && npm run lint",
+        "lint": "eslint src --ext ts",
+        "test": "node ./out/test/runTest.js"
+    },
+    "devDependencies": {
+        "@types/glob": "^7.1.3",
+        "@types/mocha": "^8.0.4",
+        "@types/node": "^12.11.7",
+        "@types/vscode": "^1.55.0",
+        "@typescript-eslint/eslint-plugin": "^4.14.1",
+        "@typescript-eslint/parser": "^4.14.1",
+        "eslint": "^7.19.0",
+        "glob": "^7.1.6",
+        "mocha": "^8.2.1",
+        "typescript": "^4.1.3",
+        "vscode-test": "^1.5.0"
+    }
+}
