@@ -3,7 +3,7 @@
     "displayName": "Coder Helper",
     "description": "escape unescape code , splite url query , format curl command ",
     "publisher": "renweichen",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "repository": "https://github.com/enefry/coder-helper",
     "engines": {
         "vscode": "^1.55.0"
