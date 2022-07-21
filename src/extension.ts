@@ -1,8 +1,8 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-import { renameSync } from 'node:fs';
-import { stringify } from 'node:querystring';
-import { TextDecoder } from 'node:util';
+import { renameSync } from 'fs';
+import { stringify } from 'querystring';
+import { TextDecoder } from 'util';
 import * as vscode from 'vscode';
 
 
@@ -45,6 +45,12 @@ export function activate(context: vscode.ExtensionContext) {
 		return text.split(RegExp(/\s*\n\s*&/)).join("&");
 	});
 
+	addEditorSelectionCommand(context, "coder-helper.unicodeUnescape", async (text:string) => {
+		return text.replace(/\\[uU][\dA-Fa-f]{4}/gi, function(match) {
+			return String.fromCharCode(parseInt(match.replace(/\\u/g, ''), 16));
+		});
+	});
+
 	addEditorSelectionCommand(context, "coder-helper.curlCommandSplite", async function(text: string) {
 		let choise = await vscode.window.showQuickPick(["普通", "普通+cookies", "普通+data(&)+cookies"]);
 		let cookiesSplite = false;
@@ -55,7 +61,9 @@ export function activate(context: vscode.ExtensionContext) {
 			cookiesSplite = true;
 			dataSplite = true;
 		}
-		let exp = RegExp("(?:(?:[-\\w]*\\s+)|(?:'[^']*'\\s+)|(?:\"[^\"]*\"\\s+))|((?:[-\\w]*)|(?:'[^']*')|(?:\"[^\"]*\"))$", 'g');
+
+
+		let exp = /(?:(?:[-\w]*\s+)|(?:'[^']*'\s+)|(?:"[^"]*"\s+))|((?:[-\w]*)|(?:'[^']*')|(?:"[^"]*"))$/g;
 		let groups = text.match(exp);
 		var lines = [];
 		if (groups !== null) {

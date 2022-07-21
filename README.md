@@ -52,6 +52,9 @@ Calling out known issues can help limit users opening duplicate issues against y
 
 Users appreciate release notes as you update your extension.
 
+### 0.0.5
+add unicode covert
+
 ### 0.0.4
 Bump minimist from 1.2.5 to 1.2.6
 
@@ -63,3 +66,10 @@ remove mocha
 ### 0.0.2
 
 Initial release
+
+
+-----
+打包:
+    vsce package
+发布
+    vsce publish
