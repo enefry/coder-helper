@@ -52,6 +52,11 @@ Calling out known issues can help limit users opening duplicate issues against y
 
 Users appreciate release notes as you update your extension.
 
+### 0.0.8
+
+1. fixed curl format error while has json data-binary
+2. support unescape string with single quotation mark '
+
 ### 0.0.5
 add unicode covert
 
