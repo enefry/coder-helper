@@ -1,12 +1,15 @@
 {
   "name": "coder-helper",
   "displayName": "Coder Helper",
-  "description": "escape unescape code , splite url query , format curl command ",
+  "description": "Escape/unescape code, split URL queries, and format curl commands.",
   "publisher": "renweichen",
-  "version": "0.0.8",
-  "repository": "https://github.com/enefry/coder-helper",
+  "version": "0.0.9",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/enefry/coder-helper.git"
+  },
   "engines": {
-    "vscode": "^1.96.0"
+    "vscode": "^1.125.0"
   },
   "categories": [
     "Other"
@@ -23,30 +26,12 @@
   "browser": "./dist/web/extension.js",
   "contributes": {
     "commands": [
-      {
-        "command": "coder-helper.curlCommandSplite",
-        "title": "CURL Command Formatter"
-      },
-      {
-        "command": "coder-helper.codeEscape",
-        "title": "Code:Escape"
-      },
-      {
-        "command": "coder-helper.codeUnescape",
-        "title": "Code:Unescape"
-      },
-      {
-        "command": "coder-helper.urlQuerySplite",
-        "title": "URL Query:Splite "
-      },
-      {
-        "command": "coder-helper.urlQueryMerge",
-        "title": "URL Query:Merge"
-      },
-      {
-        "command": "coder-helper.unicodeUnescape",
-        "title": "Code:Unicode unescae"
-      }
+      { "command": "coder-helper.curlCommandSplite", "title": "CURL Command Formatter" },
+      { "command": "coder-helper.codeEscape", "title": "Code: Escape" },
+      { "command": "coder-helper.codeUnescape", "title": "Code: Unescape" },
+      { "command": "coder-helper.urlQuerySplite", "title": "URL Query: Split" },
+      { "command": "coder-helper.urlQueryMerge", "title": "URL Query: Merge" },
+      { "command": "coder-helper.unicodeUnescape", "title": "Code: Unicode Unescape" }
     ]
   },
   "scripts": {
@@ -56,27 +41,30 @@
     "compile-web": "webpack",
     "watch-web": "webpack --watch",
     "package-web": "webpack --mode production --devtool hidden-source-map",
+    "package": "vsce package",
+    "publish": "vsce publish",
     "lint": "eslint src",
     "run-in-browser": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. ."
   },
   "devDependencies": {
     "@types/assert": "^1.5.11",
     "@types/mocha": "^10.0.10",
-    "@types/vscode": "^1.96.0",
-    "@types/webpack-env": "^1.18.5",
-    "@typescript-eslint/eslint-plugin": "^8.17.0",
-    "@typescript-eslint/parser": "^8.17.0",
-    "@vscode/test-web": "^0.0.65",
+    "@types/vscode": "^1.125.0",
+    "@types/webpack-env": "^1.18.8",
+    "@typescript-eslint/eslint-plugin": "^8.65.0",
+    "@typescript-eslint/parser": "^8.65.0",
+    "@vscode/test-web": "^0.0.81",
+    "@vscode/vsce": "^3.9.2",
     "assert": "^2.1.0",
-    "eslint": "^9.16.0",
-    "mocha": "^11.0.1",
+    "eslint": "^10.8.0",
+    "mocha": "^11.8.0",
     "process": "^0.11.10",
-    "ts-loader": "^9.5.1",
-    "typescript": "^5.7.2",
-    "webpack": "^5.95.0",
-    "webpack-cli": "^5.1.4"
+    "ts-loader": "^9.6.2",
+    "typescript": "^5.9.3",
+    "webpack": "^5.109.2",
+    "webpack-cli": "^7.2.2"
   },
   "dependencies": {
-    "shell-quote": "^1.8.2"
+    "shell-quote": "^1.10.0"
   }
 }
