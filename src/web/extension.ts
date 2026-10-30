@@ -1,7 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-const shellQuote = require('shell-quote').parse;
+import { formatCurl } from './formatCurl';
 
 let outputChannel: vscode.OutputChannel;
 
@@ -21,10 +21,10 @@ function addEditorSelectionCommand(context: vscode.ExtensionContext, command: st
 	});
 }
 
-function addEditorCommand(context: vscode.ExtensionContext, command: string, callback: (textEditor: vscode.TextEditor, edit: vscode.TextEditorEdit, ...args: any[]) => void, thisArg?: any) {
+function addEditorCommand(context: vscode.ExtensionContext, command: string, callback: (textEditor: vscode.TextEditor, edit: vscode.TextEditorEdit, ...args: any[]) => void | Promise<void>, thisArg?: any) {
 	let disposable = vscode.commands.registerTextEditorCommand(command, async function (textEditor: vscode.TextEditor, edit: vscode.TextEditorEdit, ...args: any[]) {
 		try {
-			callback(textEditor, edit, args);
+			await callback(textEditor, edit, args);
 		} catch (exp) {
 			LOG(">>>" + exp + " >>>" + textEditor + ">>>" + edit + " >>>" + args);
 			vscode.window.showErrorMessage(command + ":" + exp);
@@ -87,50 +87,7 @@ export function activate(context: vscode.ExtensionContext) {
 			cookiesSplite = true;
 			dataSplite = true;
 		}
-		// 解析命令
-		const tokens = shellQuote(text);
-		var lines = [];
-		let skip = false;
-		for (let i = 0; i < tokens.length; i++) {
-			if (skip) {
-				skip = false;
-				continue;
-			}
-			let value = tokens[i].trim();
-			if (value.startsWith('-') && i + 1 < tokens.length) {
-				let nextData = escape(tokens[i + 1].trim());
-				LOG("value=" + value + " next=" + nextData);
-				let isAppend = false;
-				skip = true;
-				if (cookiesSplite && value === "-H") {
-					let first = nextData.indexOf(":");
-					let headerName = nextData.substring(0, first);
-					let headerValues = nextData.substring(first + 1).trim();
-					let realHeaderName = headerName.substring(1);
-					if (realHeaderName === "Cookie") {
-						isAppend = true;
-						lines.push("-H " + headerName + ": \\\n" + headerValues.split("; ").join("; \\\n"));
-					}
-				}
-				if (dataSplite && value === "--data") {
-					isAppend = true;
-					lines.push(value + " \\\n" + nextData.split("&").join(" \\\n"));
-				}
-				if (!isAppend) {
-					lines.push(value + " " + nextData);
-				}
-			} else {
-				lines.push(value);
-			}
-		}
-
-		return lines.filter(value => {
-			if (value.trim().length > 0) {
-				return value;
-			} else {
-				return null;
-			}
-		}).join(" \\\n");
+		return formatCurl(text, cookiesSplite, dataSplite);
 
 	});
 	LOG("Code Helper Load.");
